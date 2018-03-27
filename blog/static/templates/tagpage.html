@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Posts tagged:<b style="color: #c7254e;">{{tag}}</b></h2>
+
+<div class="list-group">
+{% for post in posts %}
+
+<ul class="list-group">
+  <li class="list-group-item list-group-item-success">
+    <span class="badge">{{post.created|date:"j M"}}</span>
+      <a href="/blog/{{post.id}}"   >{{post.title}}</a>
+  </li>
+</ul>
+
+{% endfor %}
+</div>
+{% endblock %}

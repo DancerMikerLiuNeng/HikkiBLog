@@ -1,0 +1,59 @@
+<html>
+
+<!--<head>
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+</head>-->
+
+<body>
+        {% for post_year in list_posts %}
+            <ul class="year">{{post_year.keys.0}}
+            
+                {% for month, posts in post_year.values.0.items %}
+                   
+                    <!--show only months with posts! -->
+                    
+                    {% if posts %} 
+                        <li id="{{post_year.keys.0}}-{{month}}" class="month">
+                            <div class="month-data" id="test1" onclick="test()">
+                                <div class="collapsed">►&nbsp;</div>
+                                <div class="expanded" style="display:none;">▼&nbsp;</div>
+    
+                                <span class="name">{{posts.0.created|date:"F"}}</span>
+                                <span class="counter"> ({{posts|length}})</span>
+                            </div>
+                            <ul class="posts" style="display:none;">
+                            {% for post in posts %}
+                                <li class="post">
+                                <a class="title" href="/blog/{{post.id}}">{{post.title}}</a>
+                                <div class="date">{{post.created|date:"j M Y"}}</div>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        </li>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+</body>
+
+<script>
+    // toggle month
+    var toggleMonth = function(month) {
+        $(month).children('.posts').slideToggle('slow');
+        $(month).find('.month-data div.collapsed').toggle();
+        $(month).find('.month-data div.expanded').toggle(); 
+    }
+
+    // expand the current month
+    toggleMonth($('#{{now.year}}-{{now.month}}'));
+    
+    // intercept click to toggle month
+    $('.month-data').click(function() {
+        var month = $(this).parent();
+        toggleMonth(month);
+    });
+</script>
+
+</html>
